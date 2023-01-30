@@ -1,7 +1,6 @@
-<section [ngClass]="{'loading': taskList.length == 0}">
-  <!--<h1 *ngIf="taskList.length == 0">
+<section >
+  <h1 *ngIf="taskList.length == 0">
   Aguardando a criação de uma lista...</h1>
-  -->
 
   <ul *ngIf="taskList.length != 0">
     <li *ngFor="let item of taskList, let i = index">

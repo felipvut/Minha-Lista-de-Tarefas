@@ -1,4 +1,5 @@
 import { Component, DoCheck } from '@angular/core';
+import { takeLast } from 'rxjs';
 
  //Interface
 import { TaskList } from '../../model/task-list';
@@ -9,12 +10,13 @@ import { TaskList } from '../../model/task-list';
   styleUrls: ['./todo-list.component.scss']
 })
 export class TodoListComponent implements DoCheck{
-  public taskList: Array<TaskList> = [];
+  public taskList: Array<TaskList> = JSON.parse(localStorage.getItem("list") || '[]');
 
   constructor() {}
 
   ngDoCheck(): void {
-    this.taskList.sort((first, last) => Number(first.checked) - Number(last.checked))
+
+    this.setLocalStorage()
   }
 
   public setEmitTaskList(event: string){
@@ -39,6 +41,12 @@ export class TodoListComponent implements DoCheck{
       if (confirm) {
         this.deleteItemTaskList(index)
       }
+    }
+  }
+  public setLocalStorage() {
+    if(this.taskList){
+      this.taskList.sort((primeiro, ultimo) => Number(primeiro.checked) - Number(ultimo.checked))
+      localStorage.setItem("list", JSON.stringify(this.taskList))
     }
   }
 }
